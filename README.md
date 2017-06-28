@@ -10,13 +10,36 @@ For multi-language plugin:
 - optionally write the Description / Usage sections in several languages
 -->
 ## Description
-Description of your Plugin
+
+A collection of useful utility functions for other Jarvis plugins.
+
+## Configuration
+
+The following variables are required by the plugin:
+
+```
+jv_pg_utils_browserLockFile=/tmp/jv_pg_utils_browser
+  
+A temporary file storing the PID of an opened browser.
+```
 
 ## Usage
+
+No commands are provided by this plugin.
+  
+The plugin provides the following functions:
+
 ```
-You: example of how to trigger the command
-Jarvis: output from Jarvis
+jv_pg_utils_openKioskBrowser "<url>" "<message said by Jarvis while opening the browser>"
+  
+Opens a chromium-browser instance in kiosk mode (no window decorations, no menu, fullscreen) on the given URL and optionally say something.
+```
+```
+jv_pg_utils_closeBrowser "<message said by Jarvis if there is no browser running>"
+  
+Closes a running chromium-browser instance or optionally say something if no instance is running.
 ```
 
 ## Author
-[your name](http://your.website)
+
+[Linagora](https://linagora.com)

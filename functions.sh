@@ -1,8 +1,24 @@
-#!/bin/bash
-# Here you can create functions which will be available from the commands file
-# You can also use here user variables defined in your config file
-# To avoid conflicts, name your function like this
-# pg_XX_myfunction () { }
-# pg for PluGin
-# XX is a short code for your plugin, ex: ww for Weather Wunderground
-# You can use translations provided in the language folders functions.sh
+#!/usr/bin/env bash
+
+function jv_pg_utils_openKioskBrowser() {
+    local url="${1}"
+    local message="${2}"
+
+    jv_pg_utils_closeBrowser
+
+    chromium-browser --kiosk "${url}" > /dev/null 2>&1 & disown
+    echo $! > ${jv_pg_utils_browserLockFile}
+
+    [[ ! -z ${message} ]] && say "${message}"
+}
+
+function jv_pg_utils_closeBrowser() {
+    local noBrowserMessage="${1}"
+
+    if [[ -e ${jv_pg_utils_browserLockFile} ]] && kill -0 $(cat ${jv_pg_utils_browserLockFile}) > /dev/null 2>&1
+    then
+        kill $(cat ${jv_pg_utils_browserLockFile})
+    else
+        [[ ! -z ${noBrowserMessage} ]] && say "${noBrowserMessage}"
+    fi
+}
